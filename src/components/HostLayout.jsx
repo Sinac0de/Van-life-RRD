@@ -18,6 +18,7 @@ const HostLayout = () => {
           Dashboard
         </NavLink>
 
+        {/* in child routes we don't need to use the full path */}
         <NavLink
           style={({ isActive }) => (isActive ? activeNavStyle : null)}
           to="income"

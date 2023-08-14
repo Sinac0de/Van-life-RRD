@@ -12,6 +12,7 @@ const Header = () => {
         #VANLIFE
       </Link>
       <nav>
+        {/* isActive checks for any active nav links */}
         <NavLink
           style={({ isActive }) => (isActive ? activeNavStyle : null)}
           to="/host"
