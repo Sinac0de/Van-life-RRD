@@ -5,13 +5,16 @@ import { getVans } from "../../api";
 const Vans = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [vans, setVans] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const typeFilter = searchParams.get("type");
 
   useEffect(() => {
     const loadData = async () => {
+      setLoading(true);
       const data = await getVans();
       setVans(data);
+      setLoading(false);
     };
     loadData();
   }, []);
@@ -40,6 +43,11 @@ const Vans = () => {
       </div>
     );
   });
+
+  //show the Loading if the status is loading
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
     <div className="van-list-container">
