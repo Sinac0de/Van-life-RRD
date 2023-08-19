@@ -7,7 +7,7 @@ import {
 
 import Home from "./pages/Home";
 import About from "./pages/About";
-import Vans from "./pages/Vans/Vans";
+import Vans, { loader as vansLoader } from "./pages/Vans/Vans";
 import VanDetail from "./pages/Vans/VanDetail";
 import Layout from "./components/Layout";
 import HostLayout from "./components/HostLayout";
@@ -29,7 +29,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
       <Route path="about" element={<About />} />
-      <Route path="vans" element={<Vans />} />
+      <Route path="vans" element={<Vans />} loader={vansLoader} />
       <Route path="vans/:id" element={<VanDetail />} />
 
       <Route path="/host" element={<HostLayout />}>
@@ -50,33 +50,7 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  return (
-    <RouterProvider router={router} />
-    // <BrowserRouter>
-    //   <Routes>
-    //     <Route path="/" element={<Layout />}>
-    //       <Route index element={<Home />} />
-    //       <Route path="about" element={<About />} />
-    //       <Route path="vans" element={<Vans />} />
-    //       <Route path="vans/:id" element={<VanDetail />} />
-
-    //       <Route path="/host" element={<HostLayout />}>
-    //         <Route index element={<Dashboard />} />
-    //         <Route path="income" element={<Income />} />
-    //         <Route path="reviews" element={<Reviews />} />
-    //         <Route path="vans" element={<HostVans />} />
-
-    //         <Route path="vans/:id" element={<HostVanDetail />}>
-    //           <Route index element={<HostVanInfo />} />
-    //           <Route path="photos" element={<HostVanPhotos />} />
-    //           <Route path="pricing" element={<HostVanPricing />} />
-    //         </Route>
-    //         <Route path="*" element={<NotFound />} />
-    //       </Route>
-    //     </Route>
-    //   </Routes>
-    // </BrowserRouter>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
