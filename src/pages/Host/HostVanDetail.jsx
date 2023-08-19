@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
-import { Link, NavLink, Outlet, useParams } from "react-router-dom";
+import { Link, NavLink, Outlet, useLoaderData } from "react-router-dom";
+import { getHostVans } from "../../api";
+
+const loader = ({ params }) => {
+  return getHostVans(params.id);
+};
 
 const HostVanDetail = () => {
-  const [currentVan, setCurrentVan] = useState(null);
-  const { id } = useParams();
+  const currentVan = useLoaderData();
 
   const activeNavStyle = {
     fontWeight: "bold",
@@ -11,15 +14,7 @@ const HostVanDetail = () => {
     color: "#161616",
   };
 
-  useEffect(() => {
-    fetch(`/api/host/vans/${id}`)
-      .then((res) => res.json())
-      .then((data) => setCurrentVan(data.vans));
-  }, []);
-
-  if (!currentVan) {
-    return <h2>Loading...</h2>;
-  }
+  //because we are using the loader to get the data, we don't need loading state anymore
 
   return (
     <section>
