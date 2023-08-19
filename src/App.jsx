@@ -26,7 +26,7 @@ import NotFound from "./pages/NotFound";
 import "./server";
 import "./App.css";
 import ErrorElement from "./components/ErrorElement";
-import Login from "./pages/login";
+import Login, { loginLoader } from "./pages/login";
 import { requireAuth } from "./utils";
 
 const router = createBrowserRouter(
@@ -40,7 +40,7 @@ const router = createBrowserRouter(
         loader={vansLoader}
         errorElement={<ErrorElement />}
       />
-      <Route path="login" element={<Login />} />
+      <Route path="login" element={<Login />} loader={loginLoader} />
       <Route path="vans/:id" element={<VanDetail />} loader={VanDetailLoader} />
 
       <Route path="/host" element={<HostLayout />}>
