@@ -1,29 +1,18 @@
-import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useState } from "react";
+import { Link, useLoaderData, useSearchParams } from "react-router-dom";
 import { getVans } from "../../api";
+
+export const loader = () => {
+  return getVans();
+};
 
 const Vans = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [vans, setVans] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const typeFilter = searchParams.get("type");
 
-  useEffect(() => {
-    const loadData = async () => {
-      setLoading(true);
-      try {
-        const data = await getVans();
-        setVans(data);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadData();
-  }, []);
+  const vans = useLoaderData();
 
   const displayedVans = typeFilter
     ? vans.filter((van) => van.type.toLowerCase() === typeFilter)
@@ -49,11 +38,6 @@ const Vans = () => {
       </div>
     );
   });
-
-  //show the Loading if the status is loading
-  if (loading) {
-    return <h1>Loading...</h1>;
-  }
 
   //show the Error message if api call fails
   if (error) {
