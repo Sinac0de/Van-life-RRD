@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { loginUser } from "../api";
 
 export const loginLoader = ({ request }) => {
@@ -14,18 +14,20 @@ const Login = () => {
   });
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
-
   //get the message params
   const message = useLoaderData();
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
     setError(null);
     setStatus("submitting");
     loginUser(loginFormData)
-      .then((data) => console.log(data))
+      .then((data) => {
+        navigate("/host");
+      })
       .catch((err) => setError(err))
-      .finally(setStatus("idle"));
+      .finally(() => setStatus("idle"));
   }
 
   function handleChange(e) {
@@ -53,7 +55,9 @@ const Login = () => {
           placeholder="Password"
           value={loginFormData.password}
         />
-        <button disabled={status === "submitting"}>Log in</button>
+        <button disabled={status === "submitting"}>
+          {status === "submitting" ? "Logging in..." : "login"}
+        </button>
       </form>
     </div>
   );
