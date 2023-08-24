@@ -1,11 +1,16 @@
 import { useState } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { Form, useLoaderData, useNavigate } from "react-router-dom";
 import { loginUser } from "../api";
 
-export const loginLoader = ({ request }) => {
+export const loader = ({ request }) => {
   //we could also use searchParams in the RRD library
   return new URL(request.url).searchParams.get("message");
 };
+
+export async function action() {
+  console.log("Login Action function");
+  return null;
+}
 
 const Login = () => {
   const [loginFormData, setLoginFormData] = useState({
@@ -17,6 +22,7 @@ const Login = () => {
   //get the message params
   const message = useLoaderData();
   const navigate = useNavigate();
+  //useNavigate does the same as the <Navigate /> but in the non-jsx format
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -40,7 +46,7 @@ const Login = () => {
       <h1>Sign in to your account</h1>
       {message && <h3 className="red">{message}</h3>}
       {error && <h3 className="red">{error.message}</h3>}
-      <form onSubmit={handleSubmit} className="login-form">
+      <Form method="post" className="login-form">
         <input
           type="text"
           name="email"
@@ -58,7 +64,7 @@ const Login = () => {
         <button disabled={status === "submitting"}>
           {status === "submitting" ? "Logging in..." : "login"}
         </button>
-      </form>
+      </Form>
     </div>
   );
 };
